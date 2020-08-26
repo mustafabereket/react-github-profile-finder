@@ -1,24 +1,26 @@
-import React from 'react';
-import logo from './logo.svg';
+import React, {useState} from 'react';
 import './App.css';
+import Footer from "./components/Footer";
+import Search from "./components/Search";
+import Profile from "./components/Profile";
 
 function App() {
+    let [user, setUser] = useState(null);
+
+    async function getProfile(name) {
+
+        const getuser = await fetch(`https://api.github.com/users/${name}`);
+        const profile = await getuser.json();
+        setUser(profile);
+        console.log(profile);
+
+    }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className='mainContainer'>
+      <Search onUserSubmit={getProfile} />
+        {user && <Profile user={user}/>}
+      <Footer/>
     </div>
   );
 }
