@@ -1,11 +1,11 @@
 import React, {useState} from "react";
 
-function Search(props) {
+const Search= ({onUserSubmit, clearUsers, showClear}) => {
 
     let [inputText, setInputText] = useState('');
 
 
-    function printText() {
+    const printText = () => {
         console.log(inputText);
     }
 
@@ -17,9 +17,9 @@ function Search(props) {
 
     function submitName(event) {
         printText();
-        event.preventDefault();
-        props.onUserSubmit(inputText);
+        onUserSubmit(inputText);
         setInputText('');
+        event.preventDefault();
     }
 
 
@@ -29,6 +29,7 @@ function Search(props) {
             <form>
                 <input className='searchBox' onChange={handleChange} value={inputText}/>
                 <button type='submit' onClick={submitName}> Search</button>
+                {showClear && <button className='btn btn-light btn-block' onClick={clearUsers}>Clear</button>}
             </form>
         </div>
     )
