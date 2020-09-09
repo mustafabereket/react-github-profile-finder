@@ -9,9 +9,9 @@ function UserDetails(props) {
     const githubContext = useContext(GithubContext);
     
     useEffect(()=>{
-        console.log(props.match.params.login)
         githubContext.getUser(props.match.params.login);
         githubContext.getRepos(props.match.params.login);
+        // eslint-disable-next-line
     }, [])
     const user = githubContext.user;
 
