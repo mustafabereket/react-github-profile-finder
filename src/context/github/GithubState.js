@@ -3,7 +3,12 @@ import GithubContext from "./githubContext";
 import GithubReducer from "./GithubReducer"
 import axios from "axios";
 import * as _ from '../types';
-const postUrl = `client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+let postUrl;
+if(process.env.NODE_ENV !== 'production'){
+    postUrl = `client_id=${process.env.REACT_APP_GITHUB_CLIENT_ID}&client_secret=${process.env.REACT_APP_GITHUB_CLIENT_SECRET}`
+} else {
+    postUrl = `client_id=${process.env.CLIENT_ID}&client_secret=${process.env.CLIENT_SECRET}`
+}
 
 
 const GithubState = (props) => {
