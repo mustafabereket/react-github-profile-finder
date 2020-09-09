@@ -1,13 +1,13 @@
-import React, {useState} from "react";
+import React, {useState, useContext} from "react";
+import GithubContext from "../context/github/githubContext";
+import AlertContext from "../context/alert/AlertContext"
+import Alert from "./Alert"
+const Search = () => {
 
-const Search= ({onUserSubmit, clearUsers, showClear}) => {
-
+    const githubContext = useContext(GithubContext);
+    const alertContext = useContext(AlertContext);
+  
     let [inputText, setInputText] = useState('');
-
-
-    const printText = () => {
-        console.log(inputText);
-    }
 
 
     function handleChange(event) {
@@ -16,20 +16,25 @@ const Search= ({onUserSubmit, clearUsers, showClear}) => {
     }
 
     function submitName(event) {
-        printText();
-        onUserSubmit(inputText);
-        setInputText('');
         event.preventDefault();
+
+        if(inputText){
+            githubContext.searchUsers(inputText)
+            setInputText('');
+        }else {
+            alertContext.missingInput();
+        }
     }
 
 
 
     return (
         <div>
-            <form>
+            <form className='form'>
                 <input className='searchBox' onChange={handleChange} value={inputText}/>
-                <button type='submit' onClick={submitName}> Search</button>
-                {showClear && <button className='btn btn-light btn-block' onClick={clearUsers}>Clear</button>}
+                <button className='btn btn-dark btn-block form-buttons' type='submit' onClick={submitName}> Search</button>
+                {githubContext.users.length > 0 && <button className='btn btn-light btn-block form-buttons' onClick={githubContext.clearUsers}>Clear</button>}
+                {alertContext.message && <Alert/>}
             </form>
         </div>
     )

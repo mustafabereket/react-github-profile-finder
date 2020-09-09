@@ -311,6 +311,14 @@ img {
 input {
   margin: 1.2rem 0;
 }
+form {
+  display: flex;
+  flex-direction: column;
+}
+.form-buttons {
+  width: 40%;
+  margin: 10px auto;
+}
 
 .form-text {
   display: block;
